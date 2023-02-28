@@ -39,26 +39,58 @@
     <div class="main">
         <div class="menu">
 
-            <div class="item icon__dashboard item--selected">Tổng quan</div>
-            <div class="item icon__temporature">Nhiệt độ</div>
-            <div class="item icon__humidity">Độ ẩm</div>
-            <div class="item icon__lamp">Thiết bị</div>
+            <div class="item icon__dashboard item--selected" name = "item_dashboard">Tổng quan</div>
+            <div class="item icon__temperature" name = "item_temperature">Nhiệt độ</div>
+            <div class="item icon__humidity" name = "item_humidity">Độ ẩm</div>
+            <div class="item icon__lamp" name = "item_lamp">Thiết bị</div>
 
         </div>
+
         <div class="content">
             <div class="page__header">
-                <select name="" id="">
-                    <option value="1">Phòng khách</option>
-                    <option value="2">Ban công</option>
-                </select>
+                <div class="page__toolbar--left">
+                    <select name="" id="">
+                        <option value="1">Phòng khách</option>
+                        <option value="2">Ban công</option>
+                    </select>
+                    <!-- <input id="searchInput" type="text" class="input input__icon input__icon--search" title="Tìm kiếm theo mã hoặc tên"> -->
+                    <input id="searchInput" type="text" class="input" title="Tối đa 30 giờ tới">
+                   
+                </div>
                 <button id="btnRefresh" class="page__header--button button button__icon button__icon--refresh">Refresh</button>
             </div>
-            
+
+            <div class="page__content" id="content_dashboard">
+                <br> 
+                <div>Nhiệt độ</div>
+                <div class="chartContainer"></div>
+                
+                <!-- <div class="chartContainer" style="height: 300px; width: 100%;">4</div> -->
+            </div>
+
+            <div class="page__content" id="content_temperature">
+                <div class="page__header--title heading" style = "font-size: 16px;">1</div>
+            </div>
+
+            <div class="page__content" id="content_humidity">
+                <div class="page__header--title heading" style = "font-size: 16px;">2</div>
+            </div>
+
+            <div class="page__content" id="content_lamp">
+                <div class="page__header--title heading" style = "font-size: 16px;">3</div>
+            </div>
+
         </div>
+    
+    
     </div>
 
+        
+
     <!-- nhúng các thư viện -->
-    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
+    <!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> -->
+    <script type="text/javascript" src="../js/jquery.canvasjs.min.js"></script>
 
     <!-- Nhúng các js dùng chung -->
     <!-- <script src="/js/format.js"></script> -->
