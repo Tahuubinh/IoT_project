@@ -25,7 +25,20 @@
 }
 
 .icon__report {
-    background-image: url(../../assets/icon/report.png);
+    background-image: url(../../assets/icon/temperature.svg);
+}
+
+.icon__temporature {
+    background-image: url(../../assets/icon/temperature.svg);
+}
+
+.icon__humidity {
+    background-image: url(../../assets/icon/humidity.jpg);
+}
+
+.icon__lamp {
+    background-image: url(../../assets/icon/lamp.svg);
+    background-size: 15px !important;
 }
 
 .icon__setting {

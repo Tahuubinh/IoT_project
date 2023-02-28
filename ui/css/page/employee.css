@@ -5,7 +5,7 @@
     border: 1px solid #bbbbbb;
     background-image: url(../../assets/icon/refresh.png);
     background-repeat: no-repeat;
-    background-position: center center;
+    /* background-position: center center; */
     cursor: pointer;
 }
 

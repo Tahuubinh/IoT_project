@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/page/employee.css">
+    <!-- <link rel="stylesheet" href="../assets/font/fontawesome-5.15.1/css/font-awesome.min.css"> -->
+    <title>CUKCUK.VN - Phần mềm quản lý nhà hàng</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="header__left">
+                <div class="header__sibar"></div>
+                <!-- <div class="header__logo"></div> -->
+            </div>
+            <div class="header__right">
+                <div>
+                    <div class="page__header--title heading">Hệ thống giám sát nhà từ xa</div>
+                    <!-- <select name="" id="">
+                        <option value="1">Phòng khách</option>
+                        <option value="2">Ban công</option>
+                    </select> -->
+                </div>
+                <div class="user">
+                    <div class="user__name">Tạ Hữu Bình</div>
+                    <div class="user__avatar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="menu">
+
+            <div class="item icon__dashboard item--selected">Tổng quan</div>
+            <div class="item icon__temporature">Nhiệt độ</div>
+            <div class="item icon__humidity">Độ ẩm</div>
+            <div class="item icon__lamp">Thiết bị</div>
+
+        </div>
+        <div class="content">
+            <div class="page__header">
+                <select name="" id="">
+                    <option value="1">Phòng khách</option>
+                    <option value="2">Ban công</option>
+                </select>
+                <button id="btnRefresh" class="page__header--button button button__icon button__icon--refresh">Refresh</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- nhúng các thư viện -->
+    <script src="../js/jquery-3.6.0.min.js"></script>
+
+    <!-- Nhúng các js dùng chung -->
+    <!-- <script src="/js/format.js"></script> -->
+
+    <!-- Nhúng các js sử dụng riêng cho trang -->
+    <!-- <script src="/js/pages/employee.js"></script> -->
+    <script src="../js/pages/iot.js"></script>
+
+</body>
+
+</html>
