@@ -5,7 +5,7 @@ content_lamp = $("#content_lamp")
 
 $(document).ready(function() {
     // gán các sự kiện cho các element:
-    renderDashboard();
+    renderDashboard(content_dashboard);
     initEvents();
 
     // Load dữ liệu:
@@ -60,19 +60,18 @@ function initEvents() {
 
         switch (item_name) {
             case "item_dashboard":
-                renderDashboard();
+                renderDashboard(content_dashboard);
+                publishMessage();
                 break;
             case "item_temperature":
-                $('.page__content').remove();
-                content_temperature.insertAfter('.page__header');
+                renderTemperature(content_temperature);
+                publishMessage();
                 break;
             case "item_humidity":
-                $('.page__content').remove();
-                content_humidity.insertAfter('.page__header');
+                renderHumidity(content_humidity)
                 break;
             case "item_lamp":
-                $('.page__content').remove();
-                content_lamp.insertAfter('.page__header');
+                renderLamp(content_lamp);
                 break;
           }
         
@@ -82,12 +81,41 @@ function initEvents() {
         loadData();
     })
 
+    $("#bong1").click(function() {
+        if ($(this).hasClass("button__icon--lamp--on")){
+            $(this).removeClass("button__icon--lamp--on");
+            $(this).addClass("button__icon--lamp--off");
+            $(this).text('Tắt');
+        } else {
+            $(this).removeClass("button__icon--lamp--off");
+            $(this).addClass("button__icon--lamp--on");
+            $(this).text('Hoạt động');
+        }
+    });
+
+    $("#bong2").click(function() {
+        if ($(this).hasClass("button__icon--lamp--on")){
+            $(this).removeClass("button__icon--lamp--on");
+            $(this).addClass("button__icon--lamp--off");
+            $(this).text('Tắt');
+        } else {
+            $(this).removeClass("button__icon--lamp--off");
+            $(this).addClass("button__icon--lamp--on");
+            $(this).text('Hoạt động');
+        }
+    });
+
     
 }
 
-function renderDashboard() {
+function renderDashboard(thispage){
     $('.page__content').remove();
-    content_dashboard.insertAfter('.page__header');
+    thispage.insertAfter('.page__header');
+}
+
+function renderTemperature(thispage) {
+    $('.page__content').remove();
+    thispage.insertAfter('.page__header');
     options = [
         { label: "1",  y: 5.28 },
         { label: "2",  y: 3.83 },
@@ -104,6 +132,16 @@ function renderDashboard() {
     ]
     drawTemperatureLinePlot(options);
     
+}
+
+function renderHumidity(thispage){
+    $('.page__content').remove();
+    thispage.insertAfter('.page__header');
+}
+
+function renderLamp(thispage){
+    $('.page__content').remove();
+    thispage.insertAfter('.page__header');
 }
 
 function drawTemperatureLinePlot(options){

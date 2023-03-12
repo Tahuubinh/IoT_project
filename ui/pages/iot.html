@@ -8,6 +8,7 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/page/employee.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"></script>
     <!-- <link rel="stylesheet" href="../assets/font/fontawesome-5.15.1/css/font-awesome.min.css"> -->
     <title>CUKCUK.VN - Phần mềm quản lý nhà hàng</title>
 </head>
@@ -62,14 +63,34 @@
 
             <div class="page__content" id="content_dashboard">
                 <br> 
-                <div>Nhiệt độ</div>
-                <div class="chartContainer"></div>
+                <!-- <div class="chartContainer"></div> -->
+                <div style = "display: flex; position: relative;">
+                    <div class="page__content--title">Bóng đèn 1:</div>
+                    <!-- <button id="bong1" class="button button__icon" style="position: absolute;left: 100px; transform: translate(0%, -25%);">Refresh</button> -->
+                    <button id="bong1" class="button__icon button__icon--lamp button__icon--lamp--on">Hoạt động</button>
+                </div>
+                <br> 
+                <br>
+                <div style = "display: flex; position: relative;">
+                    <div class="page__content--title">Bóng đèn 2:</div>
+                    <!-- <button id="bong1" class="button button__icon" style="position: absolute;left: 100px; transform: translate(0%, -25%);">Refresh</button> -->
+                    <button id="bong2" class="button__icon button__icon--lamp button__icon--lamp--off">Tắt</button>
+                </div>
+                <br> 
+                <br>
+                <div class="page__content--title" style = "color: red;">Nhiệt độ:</div>
+                <br> 
+                <br>
+                <div class="page__content--title" style = "color: blue;">Độ ẩm:</div>
                 
                 <!-- <div class="chartContainer" style="height: 300px; width: 100%;">4</div> -->
             </div>
 
             <div class="page__content" id="content_temperature">
-                <div class="page__header--title heading" style = "font-size: 16px;">1</div>
+                <br> 
+                <div class="page__header--title heading" style = "font-size: 16px;">Thống kê nhiệt độ</div>
+                <br> 
+                <div class="chartContainer"></div>
             </div>
 
             <div class="page__content" id="content_humidity">
@@ -97,6 +118,8 @@
 
     <!-- Nhúng các js sử dụng riêng cho trang -->
     <!-- <script src="/js/pages/employee.js"></script> -->
+    <script src="../js/pages/pub.js"></script>
+    <script src="../js/pages/sub.js"></script>
     <script src="../js/pages/iot.js"></script>
 
 </body>

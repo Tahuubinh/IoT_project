@@ -48,6 +48,15 @@
     /* background-color: #e9ebee; */
 }
 
+.page__content--title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: MISA Font Bold;
+}
+
 .content .page__toolbar .page__toolbar--left {
     max-width: 80%;
     box-sizing: border-box;
