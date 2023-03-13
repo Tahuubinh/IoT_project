@@ -19,9 +19,9 @@ function onMessageDelivered() {
   console.log('Message delivered');
 }
 
-function publishMessage() {
+function publishMessage(message) {
   //const message = document.getElementById('message').value;
-  var message = 'b';
+  
   const mqttMessage = new Paho.MQTT.Message(message);
   mqttMessage.destinationName = topic;
   mqttMessage.qos = 0;

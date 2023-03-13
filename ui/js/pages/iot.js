@@ -54,18 +54,16 @@ function loadData() {
 
 function initEvents() {
     $(".item").click(function(){     
-        $('.item').removeClass("item--selected")
-        $(this).addClass("item--selected")
-        item_name = $(this).attr('name')
+        $('.item').removeClass("item--selected");
+        $(this).addClass("item--selected");
+        item_name = $(this).attr('name');
 
         switch (item_name) {
             case "item_dashboard":
                 renderDashboard(content_dashboard);
-                publishMessage();
                 break;
             case "item_temperature":
                 renderTemperature(content_temperature);
-                publishMessage();
                 break;
             case "item_humidity":
                 renderHumidity(content_humidity)
@@ -81,39 +79,42 @@ function initEvents() {
         loadData();
     })
 
-    $("#bong1").click(function() {
-        if ($(this).hasClass("button__icon--lamp--on")){
-            $(this).removeClass("button__icon--lamp--on");
-            $(this).addClass("button__icon--lamp--off");
-            $(this).text('Tắt');
-        } else {
-            $(this).removeClass("button__icon--lamp--off");
-            $(this).addClass("button__icon--lamp--on");
-            $(this).text('Hoạt động');
-        }
-    });
-
-    $("#bong2").click(function() {
-        if ($(this).hasClass("button__icon--lamp--on")){
-            $(this).removeClass("button__icon--lamp--on");
-            $(this).addClass("button__icon--lamp--off");
-            $(this).text('Tắt');
-        } else {
-            $(this).removeClass("button__icon--lamp--off");
-            $(this).addClass("button__icon--lamp--on");
-            $(this).text('Hoạt động');
-        }
-    });
-
     
 }
 
 function renderDashboard(thispage){
     $('.page__content').remove();
     thispage.insertAfter('.page__header');
+    $("#bong1").click(function() {
+        changeLampStatus($(this));
+    });
+
+    $("#bong2").click(function() {
+        changeLampStatus($(this));
+    });
 }
 
 function renderTemperature(thispage) {
+    $('.page__content').remove();
+    thispage.insertAfter('.page__header');
+    options = [
+        { label: (new Date()).toLocaleString(),  y: 5.28 },
+        { label: "2",  y: 3.83 },
+        { label: "3",y: 6.55 },
+        { label: "4",y: 4.81 },
+        { label: "5",  y: 2.37 },
+        { label: "6", y: 2.33 },
+        { label: (new Date()).toLocaleString(), y: 3.06 },
+        { label: (new Date()).toLocaleString(),  y: 2.94 },
+        { label: (new Date()).toLocaleString(),  y: 5.41 },
+        { label: (new Date()).toLocaleString(),  y: 2.17 },
+        { label: (new Date()).toLocaleString(),  y: 2.17 },
+        { label: (new Date()).toLocaleString(),  y: 2.80 }
+    ]
+    drawLinePlot("Nhiệt độ", options, "&#8451");    
+}
+
+function renderHumidity(thispage){
     $('.page__content').remove();
     thispage.insertAfter('.page__header');
     options = [
@@ -130,13 +131,7 @@ function renderTemperature(thispage) {
         { label: "11",  y: 2.17 },
         { label: "12",  y: 2.80 }
     ]
-    drawTemperatureLinePlot(options);
-    
-}
-
-function renderHumidity(thispage){
-    $('.page__content').remove();
-    thispage.insertAfter('.page__header');
+    drawLinePlot("Độ ẩm", options, "g/m<sup>3");  
 }
 
 function renderLamp(thispage){
@@ -144,22 +139,40 @@ function renderLamp(thispage){
     thispage.insertAfter('.page__header');
 }
 
-function drawTemperatureLinePlot(options){
+function changeLampStatus(lamp){
+    var obj = {};
+    if (lamp.hasClass("button__icon--lamp--on")){
+        // lamp.removeClass("button__icon--lamp--on");
+        // lamp.addClass("button__icon--lamp--off");
+        // lamp.text('Tắt');
+        obj = {name: lamp.attr('name'), status: 0};
+    } else {
+        // lamp.removeClass("button__icon--lamp--off");
+        // lamp.addClass("button__icon--lamp--on");
+        // lamp.text('Hoạt động');
+        obj = {name: lamp.attr('name'), status: 1};
+    }
+    info = JSON.stringify(obj);
+    publishMessage(info);
+}
+
+function drawLinePlot(title, options, unit){
     $(".chartContainer").CanvasJSChart({
         title: {
             text: ""
         },
         axisY: {
-            title: "Nhiệt độ",
+            title: title,
             includeZero: false
         },
         axisX: {
+            labelAngle: 120,
             interval: 1
         },
         data: [
         {
             type: "line", //try changing to column, area
-            toolTipContent: "{label}: {y} &#8451",
+            toolTipContent: "{y} "+unit,
             dataPoints: options
         }
         ]

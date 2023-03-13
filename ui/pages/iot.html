@@ -8,7 +8,7 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/page/employee.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"></script> -->
     <!-- <link rel="stylesheet" href="../assets/font/fontawesome-5.15.1/css/font-awesome.min.css"> -->
     <title>CUKCUK.VN - Phần mềm quản lý nhà hàng</title>
 </head>
@@ -67,21 +67,21 @@
                 <div style = "display: flex; position: relative;">
                     <div class="page__content--title">Bóng đèn 1:</div>
                     <!-- <button id="bong1" class="button button__icon" style="position: absolute;left: 100px; transform: translate(0%, -25%);">Refresh</button> -->
-                    <button id="bong1" class="button__icon button__icon--lamp button__icon--lamp--on">Hoạt động</button>
+                    <button id="bong1" class="button__icon button__icon--lamp button__icon--lamp--on" name="bong1">Hoạt động</button>
                 </div>
                 <br> 
                 <br>
                 <div style = "display: flex; position: relative;">
                     <div class="page__content--title">Bóng đèn 2:</div>
                     <!-- <button id="bong1" class="button button__icon" style="position: absolute;left: 100px; transform: translate(0%, -25%);">Refresh</button> -->
-                    <button id="bong2" class="button__icon button__icon--lamp button__icon--lamp--off">Tắt</button>
+                    <button id="bong2" class="button__icon button__icon--lamp button__icon--lamp--off" name="bong2">Tắt</button>
                 </div>
                 <br> 
                 <br>
-                <div class="page__content--title" style = "color: red;">Nhiệt độ:</div>
+                <div id="temperature" class="page__content--title" style = "color: red;">Nhiệt độ:</div>
                 <br> 
                 <br>
-                <div class="page__content--title" style = "color: blue;">Độ ẩm:</div>
+                <div id="humidity" class="page__content--title" style = "color: blue;">Độ ẩm:</div>
                 
                 <!-- <div class="chartContainer" style="height: 300px; width: 100%;">4</div> -->
             </div>
@@ -90,11 +90,18 @@
                 <br> 
                 <div class="page__header--title heading" style = "font-size: 16px;">Thống kê nhiệt độ</div>
                 <br> 
-                <div class="chartContainer"></div>
+                <div class="chartContainer" style = ""></div>
+                <!-- <div style = "display: flex; padding-left: 20px; width: 100px">
+                   
+                    <div class="chartContainer"></div>
+                </div> -->
             </div>
 
             <div class="page__content" id="content_humidity">
-                <div class="page__header--title heading" style = "font-size: 16px;">2</div>
+                <br> 
+                <div class="page__header--title heading" style = "font-size: 16px;">Thống kê độ ẩm</div>
+                <br> 
+                <div class="chartContainer" style = "border:100px;  "></div>
             </div>
 
             <div class="page__content" id="content_lamp">
@@ -112,6 +119,7 @@
     <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
     <!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> -->
     <script type="text/javascript" src="../js/jquery.canvasjs.min.js"></script>
+    <script type="text/javascript" src="../js/mqttws31.js"></script>
 
     <!-- Nhúng các js dùng chung -->
     <!-- <script src="/js/format.js"></script> -->
