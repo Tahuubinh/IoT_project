@@ -1,8 +1,9 @@
-const broker = 'd0600b18851d4c2aa1208936bed0160b.s2.eu.hivemq.cloud';
+const broker = '79066356b53e43128fe4724754cc9c32.s1.eu.hivemq.cloud';
 const port = 8884;
-const topic = 'python/mqtt';
-const username = 'publisher';
-const password = 'public123';
+const topicData = 'iot_haobinhtuan_hust/data';
+const topicCommand = 'iot_haobinhtuan_hust/command';
+const username = 'iothust';
+const password = 'haobinhtuan';
 const client_id = 'python-mqtt-1';
 
 const client = new Paho.MQTT.Client(broker, port, client_id);
@@ -23,7 +24,7 @@ function publishMessage(message) {
   //const message = document.getElementById('message').value;
   
   const mqttMessage = new Paho.MQTT.Message(message);
-  mqttMessage.destinationName = topic;
+  mqttMessage.destinationName = topicCommand;
   mqttMessage.qos = 0;
   mqttMessage.retained = false;
   client.send(mqttMessage);

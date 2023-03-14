@@ -2,7 +2,8 @@ const mqtt = require("mqtt");
 const DeviceData = require('../models/devicedata.model');
 const Device = require('../models/device.model');
 
-const topic = process.env.TOPIC;
+const topic1 = process.env.TOPIC1;
+const topic2 = process.env.TOPIC2;
 const host = process.env.HOST;
 const mqttPort = process.env.MQTTPORT;
 const username = process.env.MQTTUSERNAME;
@@ -46,7 +47,7 @@ const addOneData = async (data) => {
 const addDatas = async (topic, message) => {
     try {
         const msgJson = JSON.parse(message.toString());
-        console.log(msgJson);
+        console.log(topic, msgJson);
         if (Array.isArray(msgJson)) {
             for (let data of msgJson) {
                 await addOneData(data);
@@ -68,7 +69,8 @@ const client = mqtt.connect({
     }
 );
 
-client.subscribe(topic);
+client.subscribe(topic1);
+client.subscribe(topic2);
 
 client.on('connect', function () {
     console.log('Connected');

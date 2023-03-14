@@ -19,7 +19,8 @@ receiver.connect({
 function onConnect() {
   console.log("Connected to MQTT broker!");
   // Subscribe to the specified topic
-  receiver.subscribe(topic);
+  // receiver.subscribe(topicCommand);
+  receiver.subscribe(topicData);
 }
 
 // Function to run when the client loses connection to the broker
