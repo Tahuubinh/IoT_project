@@ -30,7 +30,7 @@
                     </select> -->
                 </div>
                 <div class="user">
-                    <div class="user__name">Tạ Hữu Bình</div>
+                    <div class="user__name" id="nameUser"></div>
                     <div class="user__avatar"></div>
                 </div>
             </div>
@@ -126,7 +126,7 @@
     <script src="../js/pages/sub.js"></script>
     <script src="../js/pages/iot.js"></script>
     <script> 
-        var token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDBlZDNlMDgyN2M3ZmQ4MmFhMzBkOTciLCJuYW1lIjoiaGF0dWFuazk3bGhwIiwiaWF0IjoxNjc4Njk2Njc1LCJleHAiOjE2ODEyODg2NzV9.udNDOdRb4ihHYtxfNiBTEk-fXBPQPgEx3rL2M5SszYY"
+        var token = localStorage.getItem("token");
         var baseUrl = "http://localhost:3000";
         $.ajax({
             url: baseUrl + "/api/room",
@@ -146,8 +146,10 @@
                 getDeviceByRoom();
             }
         });
+
+        $("#nameUser").text(localStorage.getItem("nameUser"));
         
-        function getDeviceByRoomId(roomId) {
+        async function getDeviceByRoomId(roomId) {
             $.ajax({
                 url: baseUrl + `/api/device/room/${roomId}`,
                 type: "get",
@@ -180,10 +182,12 @@
                         if (sensor.deviceType.name == "humidity_sensors") {
                             let str = `<br><div id='${sensor._id}' class="page__content--title" style = "color: blue;">${sensor.deviceName}: ${sensor.value}` + "%" + `</div><br>`;
                             dataDevice += str;
+                            localStorage.setItem("humidity_sensors", sensor._id);
                         }
                         if (sensor.deviceType.name == "temperature_sensors") {
                             let str = `<br><div id='${sensor._id}' class="page__content--title" style = "color: red;">${sensor.deviceName}: ${sensor.value} ` + String.fromCharCode(8451) + `</div><br>`;
                             dataDevice += str;
+                            localStorage.setItem("temperature_sensors", sensor._id);
                         }
                     }
 
@@ -193,16 +197,11 @@
             });
         }
 
-        function getDeviceByRoom() {
+        async function getDeviceByRoom() {
             const roomId = $("#roomListing :selected").val();
             console.log(roomId);
             getDeviceByRoomId(roomId);
         }
-
-        function fun(x) {
-            console.log(x)
-        }
-
 
     </script>
 

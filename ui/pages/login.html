@@ -17,7 +17,7 @@ Body {
 Body::before {
   content: "";
   background-color: rgba(0, 0, 0, 0.68); /* black with 50% opacity */
-  position: absolute;
+  /* position: absolute; */
   top: 0;
   left: 0;
   width: 100%;
@@ -33,7 +33,7 @@ button {
     border: none;   
     cursor: pointer;   
 }   
- form {   
+ .loginForm {   
         border: 3px solid #f1f1f1;  
         width: 50%; 
         justify-content: center;
@@ -70,18 +70,19 @@ button {
 </head>    
 <body>    
     <center> <h1 class="heading"> Happy Home </h1> </center>   
-    <form>  
+    <div class="loginForm">  
         <div class="container heading" style="font-family: MISA Font Bold; font-size: 18px;">   
-            <label>Tên đăng nhập: </label>   
-            <input type="text" placeholder="Nhập tên tài khoản" name="username" required>  
+            <label>Email: </label>   
+            <input type="text" placeholder="Nhập tên tài khoản" name="email" required id="email">  
             <label>Mật khẩu: </label>   
-            <input type="password" placeholder="Nhập mật khẩu" name="password" required>  
-            <button id="login_button" type="submit" style="font-family: MISA Font Bold; font-size: 26px;" onclick="location.href='./iot.html'">Đăng nhập</button>   
+            <input type="password" placeholder="Nhập mật khẩu" name="password" required id="password">  
+            <button id="login_button" style="font-family: MISA Font Bold; font-size: 26px;" onclick="loginFunction()">Đăng nhập</button>   
             <!-- <input type="checkbox" checked="checked"> Remember me   
             <button type="button" class="cancelbtn"> Cancel</button>    -->
-            Quên <a href="#"> mật khẩu? </a>   
+            <!-- Quên <a href="#"> mật khẩu? </a>    -->
+            
         </div>   
-    </form>    
+    </div>    
 
     <!-- nhúng các thư viện -->
     <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
@@ -89,7 +90,7 @@ button {
     <!-- Nhúng các js sử dụng riêng cho trang -->
     <!-- <script src="/js/pages/employee.js"></script> -->
     <script src="../js/pages/login.js"></script>
- 
+    
 </body>   
 
 </html>  

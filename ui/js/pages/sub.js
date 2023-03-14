@@ -30,20 +30,21 @@ function onConnectionLost(response) {
 // Function to run when a message is received from the broker
 function onMessageArrived(message) {
   let info = JSON.parse(message.payloadString);
-  console.log(info);
+
   const infoId = info.deviceId;
-  if (info.value == "status") {
-    setLampStatus($(`#${infoId}`), info.value);
+  const value = info.value;
+
+  if (info.name == "status") {
+    console.log("hihi")
+    setLampStatus($(`#${infoId}`), value);
   } else if (info.name == "temperature"){
-    value = info.value;
     if (value != undefined){
       $(`#${infoId}`).text('Nhiệt độ: ' + value + String.fromCharCode(8451));
     } else {
-      $('#temperature').text('Nhiệt độ: Không thu được kết quả ');
+      $(`#${infoId}`).text('Nhiệt độ: Không thu được kết quả ');
     }
 
   } else if (info.name == "humidity"){
-    value = info.value;
     if (value != undefined){
       $(`#${infoId}`).text('Độ ẩm: ' + value + "%");
     } else {
@@ -53,6 +54,7 @@ function onMessageArrived(message) {
 }
 
 function setLampStatus(lamp, value){
+  console.log(value)
   if (value == "OFF"){
     lamp.removeClass("button__icon--lamp--on");
     lamp.addClass("button__icon--lamp--off");

@@ -5,31 +5,14 @@ const { StatusCodes } = require('http-status-codes');
 const getDeviceData = async (req, res) => {
     try {
         const deviceId = req.body.deviceId;
-        let startTime = req.body.startTime;
-        if (!startTime) {
-            throw new BadRequestError("Start time is missing");
-        }
-        startTime = new Date(startTime);
-        if (!startTime) {
-            throw new BadRequestError("Start time is invalid");
-        }
-        let endTime = req.body.endTime;
-        if (!endTime) {
-            throw new BadRequestError("End time is missing");
-        }
-        endTime = new Date(endTime);
-        if (!endTime) {
-            throw new BadRequestError("End time is invalid");
-        }
 
-        const result = await DeviceData.find({
-            deviceId,
-            timestamp: {
-                $gte: startTime,
-                $lte: endTime
-            }
-        });
-
+        const resultx = await DeviceData.find({
+            deviceId: deviceId
+        }).sort({timestamp: -1}).limit(10);
+        const result = [];
+        for (let i = resultx.length - 1; i >= 0; i--) {
+            result.push(resultx[i]);
+        }
         const returnedResult = [];
         if (result.length > 0) {
             for (data of result) {
