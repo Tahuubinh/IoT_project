@@ -24,6 +24,7 @@ const addOneData = async (data) => {
             console.log(`${now}: Value of data is missing`);
             return;
         }
+        // data["timestamp"] = now;
     
         const result = await DeviceData.create(data);
         if (name == "status" && (data.value == "ON" || data.value == "OFF")) {

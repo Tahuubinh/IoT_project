@@ -96,43 +96,100 @@ function renderDashboard(thispage){
 }
 
 function renderTemperature(thispage) {
+    const token = localStorage.getItem("token");
+    const baseUrl = "http://localhost:3000";
+
+    const deviceId = localStorage.getItem("temperature_sensors");
+
     $('.page__content').remove();
     thispage.insertAfter('.page__header');
-    options = [
-        { label: (new Date()).toLocaleString(),  y: 5.28 },
-        { label: "2",  y: 3.83 },
-        { label: "3",y: 6.55 },
-        { label: "4",y: 4.81 },
-        { label: "5",  y: 2.37 },
-        { label: "6", y: 2.33 },
-        { label: (new Date()).toLocaleString(), y: 3.06 },
-        { label: (new Date()).toLocaleString(),  y: 2.94 },
-        { label: (new Date()).toLocaleString(),  y: 5.41 },
-        { label: (new Date()).toLocaleString(),  y: 2.17 },
-        { label: (new Date()).toLocaleString(),  y: 2.17 },
-        { label: (new Date()).toLocaleString(),  y: 2.80 }
-    ]
-    drawLinePlot("Nhiệt độ", options, "&#8451");    
+    options = [];
+    $.ajax({
+        url: baseUrl + `/api/data`,
+        type: "post",
+        dataType: "json",   
+        contentType: "application/json; charset=UTF-8",
+        headers: {
+            'Authorization': token
+        },
+        data: JSON.stringify({
+            deviceId: deviceId
+        }),
+        success: function(data) {
+            console.log(data)
+            for (let i = 0; i < data.result.length; i++) {
+                const res = data.result[i];
+                options.push({
+                    label: res.time.split(' ')[1],
+                    y: res.value
+                })
+            }
+            drawLinePlot("Nhiệt độ " + String.fromCharCode(8451), options, "&#8451");    
+
+        }
+    })
+
+    // options = [
+    //     { label: (new Date()).toLocaleString(),  y: 5.28 },
+    //     { label: "2",  y: 3.83 },
+    //     { label: "3",y: 6.55 },
+    //     { label: "4",y: 4.81 },
+    //     { label: "5",  y: 2.37 },
+    //     { label: "6", y: 2.33 },
+    //     { label: (new Date()).toLocaleString(), y: 3.06 },
+    //     { label: (new Date()).toLocaleString(),  y: 2.94 },
+    //     { label: (new Date()).toLocaleString(),  y: 5.41 },
+    //     { label: (new Date()).toLocaleString(),  y: 2.17 },
+    //     { label: (new Date()).toLocaleString(),  y: 2.17 },
+    //     { label: (new Date()).toLocaleString(),  y: 2.80 }
+    // ]
 }
 
 function renderHumidity(thispage){
+    const token = localStorage.getItem("token");
+    const baseUrl = "http://localhost:3000";
+
+    const deviceId = localStorage.getItem("humidity_sensors");
+
     $('.page__content').remove();
     thispage.insertAfter('.page__header');
-    options = [
-        { label: "1",  y: 5.28 },
-        { label: "2",  y: 3.83 },
-        { label: "3",y: 6.55 },
-        { label: "4",y: 4.81 },
-        { label: "5",  y: 2.37 },
-        { label: "6", y: 2.33 },
-        { label: "7", y: 3.06 },
-        { label: "8",  y: 2.94 },
-        { label: "9",  y: 5.41 },
-        { label: "10",  y: 2.17 },
-        { label: "11",  y: 2.17 },
-        { label: "12",  y: 2.80 }
-    ]
-    drawLinePlot("Độ ẩm", options, "g/m<sup>3");  
+    options = [];
+    $.ajax({
+        url: baseUrl + `/api/data`,
+        type: "post",
+        dataType: "json",   
+        contentType: "application/json; charset=UTF-8",
+        headers: {
+            'Authorization': token
+        },
+        data: JSON.stringify({
+            deviceId: deviceId
+        }),
+        success: function(data) {
+            for (let i = 0; i < data.result.length; i++) {
+                const res = data.result[i];
+                options.push({
+                    label: res.time.split(' ')[1],
+                    y: res.value
+                })
+            }
+            drawLinePlot("Độ ẩm %", options, "g/m<sup>3");  
+        }
+    })
+    // options = [
+    //     { label: "1",  y: 5.28 },
+    //     { label: "2",  y: 3.83 },
+    //     { label: "3",y: 6.55 },
+    //     { label: "4",y: 4.81 },
+    //     { label: "5",  y: 2.37 },
+    //     { label: "6", y: 2.33 },
+    //     { label: "7", y: 3.06 },
+    //     { label: "8",  y: 2.94 },
+    //     { label: "9",  y: 5.41 },
+    //     { label: "10",  y: 2.17 },
+    //     { label: "11",  y: 2.17 },
+    //     { label: "12",  y: 2.80 }
+    // ]
 }
 
 function renderLamp(thispage){
