@@ -85,6 +85,7 @@ function initEvents() {
 function renderDashboard(thispage){
     $('.page__content').remove();
     thispage.insertAfter('.page__header');
+    localStorage.setItem("tab", "device");
     // $("#640ee113bf49af0a529390ad").click(function() {
     //     console.log(1111);
     //     changeLampStatus($(this));
@@ -96,14 +97,15 @@ function renderDashboard(thispage){
 }
 
 function renderTemperature(thispage) {
+    localStorage.setItem("tab", "temperature");
     const token = localStorage.getItem("token");
     const baseUrl = "http://localhost:3000";
+    const roomId = $("#roomListing :selected").val();    
 
-    const deviceId = localStorage.getItem("temperature_sensors");
+    const deviceId = localStorage.getItem(`${roomId}_temperature_sensors`);
 
     $('.page__content').remove();
     thispage.insertAfter('.page__header');
-    options = [];
     $.ajax({
         url: baseUrl + `/api/data`,
         type: "post",
@@ -116,7 +118,7 @@ function renderTemperature(thispage) {
             deviceId: deviceId
         }),
         success: function(data) {
-            console.log(data)
+            const options = [];
             for (let i = 0; i < data.result.length; i++) {
                 const res = data.result[i];
                 options.push({
@@ -124,36 +126,21 @@ function renderTemperature(thispage) {
                     y: res.value
                 })
             }
-            drawLinePlot("Nhiệt độ " + String.fromCharCode(8451), options, "&#8451");    
-
+            console.log(options)
+            drawLinePlot("Nhiệt độ " + String.fromCharCode(8451), options, "&#8451");
         }
     })
-
-    // options = [
-    //     { label: (new Date()).toLocaleString(),  y: 5.28 },
-    //     { label: "2",  y: 3.83 },
-    //     { label: "3",y: 6.55 },
-    //     { label: "4",y: 4.81 },
-    //     { label: "5",  y: 2.37 },
-    //     { label: "6", y: 2.33 },
-    //     { label: (new Date()).toLocaleString(), y: 3.06 },
-    //     { label: (new Date()).toLocaleString(),  y: 2.94 },
-    //     { label: (new Date()).toLocaleString(),  y: 5.41 },
-    //     { label: (new Date()).toLocaleString(),  y: 2.17 },
-    //     { label: (new Date()).toLocaleString(),  y: 2.17 },
-    //     { label: (new Date()).toLocaleString(),  y: 2.80 }
-    // ]
 }
 
 function renderHumidity(thispage){
+    localStorage.setItem("tab", "humidity");
     const token = localStorage.getItem("token");
     const baseUrl = "http://localhost:3000";
-
-    const deviceId = localStorage.getItem("humidity_sensors");
+    const roomId = $("#roomListing :selected").val();    
+    const deviceId = localStorage.getItem(`${roomId}_humidity_sensors`);
 
     $('.page__content').remove();
     thispage.insertAfter('.page__header');
-    options = [];
     $.ajax({
         url: baseUrl + `/api/data`,
         type: "post",
@@ -166,6 +153,7 @@ function renderHumidity(thispage){
             deviceId: deviceId
         }),
         success: function(data) {
+            const options = [];
             for (let i = 0; i < data.result.length; i++) {
                 const res = data.result[i];
                 options.push({
@@ -176,25 +164,7 @@ function renderHumidity(thispage){
             drawLinePlot("Độ ẩm %", options, "g/m<sup>3");  
         }
     })
-    // options = [
-    //     { label: "1",  y: 5.28 },
-    //     { label: "2",  y: 3.83 },
-    //     { label: "3",y: 6.55 },
-    //     { label: "4",y: 4.81 },
-    //     { label: "5",  y: 2.37 },
-    //     { label: "6", y: 2.33 },
-    //     { label: "7", y: 3.06 },
-    //     { label: "8",  y: 2.94 },
-    //     { label: "9",  y: 5.41 },
-    //     { label: "10",  y: 2.17 },
-    //     { label: "11",  y: 2.17 },
-    //     { label: "12",  y: 2.80 }
-    // ]
-}
-
-function renderLamp(thispage){
-    $('.page__content').remove();
-    thispage.insertAfter('.page__header');
+    
 }
 
 function changeLampStatus(lamp_id){

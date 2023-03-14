@@ -35,8 +35,9 @@ function onMessageArrived(message) {
   const infoId = info.deviceId;
   const value = info.value;
 
+  const tab = localStorage.getItem("tab");
+
   if (info.name == "status") {
-    console.log("hihi")
     setLampStatus($(`#${infoId}`), value);
   } else if (info.name == "temperature"){
     if (value != undefined){
@@ -44,12 +45,18 @@ function onMessageArrived(message) {
     } else {
       $(`#${infoId}`).text('Nhiệt độ: Không thu được kết quả ');
     }
+    if (tab == "temperature") {
+      renderTemperature($("#content_temperature"));
+    } 
 
   } else if (info.name == "humidity"){
     if (value != undefined){
       $(`#${infoId}`).text('Độ ẩm: ' + value + "%");
     } else {
       $(`#${infoId}`).text('Độ ẩm: Không thu được kết quả g/m');
+    }
+    if (tab == "humidity") {
+        renderHumidity($("#content_humidity"));
     }
   }
 }

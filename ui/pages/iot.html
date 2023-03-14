@@ -41,9 +41,9 @@
         <div class="menu">
 
             <div class="item icon__dashboard item--selected" name = "item_dashboard">Tổng quan</div>
-            <div class="item icon__temperature" name = "item_temperature">Nhiệt độ</div>
-            <div class="item icon__humidity" name = "item_humidity">Độ ẩm</div>
-            <div class="item icon__lamp" name = "item_lamp">Thiết bị</div>
+            <div class="item icon__temperature" name = "item_temperature" onclick="renderTemperature($(`#content_temperature`))">Nhiệt độ</div>
+            <div class="item icon__humidity" name = "item_humidity" onclick="renderTemperature$(`#content_humidity`)">Độ ẩm</div>
+            <!-- <div class="item icon__lamp" name = "item_lamp">Thiết bị</div> -->
 
         </div>
 
@@ -55,10 +55,10 @@
                         <option value="2">Ban công</option> -->
                     </select>
                     <!-- <input id="searchInput" type="text" class="input input__icon input__icon--search" title="Tìm kiếm theo mã hoặc tên"> -->
-                    <input id="searchInput" type="text" class="input" title="Tối đa 30 giờ tới">
+                    <!-- <input id="searchInput" type="text" class="input" title="Tối đa 30 giờ tới"> -->
                    
                 </div>
-                <button id="btnRefresh" class="page__header--button button button__icon button__icon--refresh">Refresh</button>
+                <!-- <button id="btnRefresh" class="page__header--button button button__icon button__icon--refresh">Refresh</button> -->
             </div>
 
             <div class="page__content" id="content_dashboard">
@@ -100,9 +100,9 @@
                 <div class="chartContainer" style = "border:100px;  "></div>
             </div>
 
-            <div class="page__content" id="content_lamp">
+            <!-- <div class="page__content" id="content_lamp">
                 <div class="page__header--title heading" style = "font-size: 16px;">3</div>
-            </div>
+            </div> -->
 
         </div>
     
@@ -163,7 +163,7 @@
                     const sensors = data.sensors;
                     let dataDevice = "";
                     dataDevice += `<br><br>`;
-                    // $("#content_dashboard").empty();
+                    $("#content_dashboard").empty();
                     for (let i = 0; i < leds.length; i++) {
                         const led = leds[i];
                         let str = `<div style = "display: flex; position: relative;">`;
@@ -182,12 +182,12 @@
                         if (sensor.deviceType.name == "humidity_sensors") {
                             let str = `<br><div id='${sensor._id}' class="page__content--title" style = "color: blue;">${sensor.deviceName}: ${sensor.value}` + "%" + `</div><br>`;
                             dataDevice += str;
-                            localStorage.setItem("humidity_sensors", sensor._id);
+                            localStorage.setItem(`${roomId}_humidity_sensors`, sensor._id);
                         }
                         if (sensor.deviceType.name == "temperature_sensors") {
                             let str = `<br><div id='${sensor._id}' class="page__content--title" style = "color: red;">${sensor.deviceName}: ${sensor.value} ` + String.fromCharCode(8451) + `</div><br>`;
                             dataDevice += str;
-                            localStorage.setItem("temperature_sensors", sensor._id);
+                            localStorage.setItem(`${roomId}_temperature_sensors`, sensor._id);
                         }
                     }
 
@@ -200,8 +200,15 @@
         async function getDeviceByRoom() {
             const roomId = $("#roomListing :selected").val();
             console.log(roomId);
-            getDeviceByRoomId(roomId);
-        }
+            const tab = localStorage.getItem("tab");
+            if (tab == "temperature") {
+                renderTemperature($("#content_temperature"));
+            } else if (tab == "humidity") {
+                renderHumidity($("#content_humidity"));
+            } else {
+                await getDeviceByRoomId(roomId);
+            }
+        }   
 
     </script>
 
