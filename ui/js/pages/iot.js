@@ -99,7 +99,7 @@ function renderDashboard(thispage){
 function renderTemperature(thispage) {
     localStorage.setItem("tab", "temperature");
     const token = localStorage.getItem("token");
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = "https://iot-server-7kpz.onrender.com";
     const roomId = $("#roomListing :selected").val();    
 
     const deviceId = localStorage.getItem(`${roomId}_temperature_sensors`);
@@ -135,7 +135,7 @@ function renderTemperature(thispage) {
 function renderHumidity(thispage){
     localStorage.setItem("tab", "humidity");
     const token = localStorage.getItem("token");
-    const baseUrl = "http://localhost:3000";
+    const baseUrl = "https://iot-server-7kpz.onrender.com";
     const roomId = $("#roomListing :selected").val();    
     const deviceId = localStorage.getItem(`${roomId}_humidity_sensors`);
 

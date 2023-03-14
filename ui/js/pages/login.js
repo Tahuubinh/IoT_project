@@ -1,4 +1,4 @@
-var baseUrl = "http://localhost:3000";
+var baseUrl = "https://iot-server-7kpz.onrender.com";
 
 function loginFunction() {
     let email = $("#email").val();
@@ -15,7 +15,7 @@ function loginFunction() {
         success: function(data) {
             localStorage.setItem("token", "Bearer " + data.token);
             localStorage.setItem("nameUser", data.user.name);
-            location.href = "./iot.html";
+            location.href = "./index.html";
         },
         error: function(err) {
             console.log(err)

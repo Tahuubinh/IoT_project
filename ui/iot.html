@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/page/employee.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/page/employee.css">
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"></script> -->
     <!-- <link rel="stylesheet" href="../assets/font/fontawesome-5.15.1/css/font-awesome.min.css"> -->
     <title>HAPPYHOME.VN - Kiến tạo mái ấm gia đình</title>
@@ -112,22 +112,22 @@
         
 
     <!-- nhúng các thư viện -->
-    <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
     <!-- <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> -->
-    <script type="text/javascript" src="../js/jquery.canvasjs.min.js"></script>
-    <script type="text/javascript" src="../js/mqttws31.js"></script>
+    <script type="text/javascript" src="./js/jquery.canvasjs.min.js"></script>
+    <script type="text/javascript" src="./js/mqttws31.js"></script>
 
     <!-- Nhúng các js dùng chung -->
     <!-- <script src="/js/format.js"></script> -->
 
     <!-- Nhúng các js sử dụng riêng cho trang -->
     <!-- <script src="/js/pages/employee.js"></script> -->
-    <script src="../js/pages/pub.js"></script>
-    <script src="../js/pages/sub.js"></script>
-    <script src="../js/pages/iot.js"></script>
+    <script src="./js/pages/pub.js"></script>
+    <script src="./js/pages/sub.js"></script>
+    <script src="./js/pages/iot.js"></script>
     <script> 
         var token = localStorage.getItem("token");
-        var baseUrl = "http://localhost:3000";
+        var baseUrl = "https://iot-server-7kpz.onrender.com";
         $.ajax({
             url: baseUrl + "/api/room",
             type: "get",
@@ -185,7 +185,7 @@
                             localStorage.setItem(`${roomId}_humidity_sensors`, sensor._id);
                         }
                         if (sensor.deviceType.name == "temperature_sensors") {
-                            let str = `<br><div id='${sensor._id}' class="page__content--title" style = "color: red;">${sensor.deviceName}: ${sensor.value} ` + String.fromCharCode(8451) + `</div><br>`;
+                            let str = `<br><div id='${sensor._id}' class="page__content--title" style = "color: red;">${sensor.deviceName}: ${sensor.value.toFixed(2)} ` + String.fromCharCode(8451) + `</div><br>`;
                             dataDevice += str;
                             localStorage.setItem(`${roomId}_temperature_sensors`, sensor._id);
                         }

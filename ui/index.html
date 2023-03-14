@@ -1,12 +1,14 @@
 <!DOCTYPE html>   
-<html>   
+<html lang="vi">   
 <head>  
-<meta name="viewport" content="width=device-width, initial-scale=1">  
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<meta charshet="utf-8" />
+
 <title> Login Page </title>  
 <style>   
 
 Body {  
-    background-image: url(../assets/img/home.gif);
+    background-image: url('/assets/img/home.gif');
     background-color: rgb(0, 0, 0);
     background-repeat: no-repeat;
     background-size: cover;
@@ -85,11 +87,39 @@ button {
     </div>    
 
     <!-- nhúng các thư viện -->
-    <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
 
     <!-- Nhúng các js sử dụng riêng cho trang -->
     <!-- <script src="/js/pages/employee.js"></script> -->
-    <script src="../js/pages/login.js"></script>
+    <!-- <script src="./js/pages/login.js"></script> -->
+
+    <script>
+        function loginFunction() {
+            let baseUrl = "https://iot-server-7kpz.onrender.com";
+            let email = $("#email").val();
+            let password = $("#password").val();
+            $.ajax({
+                url: baseUrl + '/api/auth/login',
+                type: "post",
+                dataType: "json",   
+                contentType: "application/json; charset=UTF-8",
+                data: JSON.stringify({
+                    email: email,
+                    password: password
+                }),
+                success: function(data) {
+                    localStorage.setItem("token", "Bearer " + data.token);
+                    localStorage.setItem("nameUser", data.user.name);
+                    location.href = "/iot.html";
+                },
+                error: function(err) {
+                    console.log(err)
+                    alert("Tài khoản mật khẩu không chính xác")
+                }
+            })
+            
+        }
+    </script>
     
 </body>   
 
