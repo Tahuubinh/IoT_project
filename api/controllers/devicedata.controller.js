@@ -28,7 +28,7 @@ const getDeviceData = async (req, res) => {
                 $gte: startTime,
                 $lte: endTime
             }
-        }).populate("attributeId");
+        });
 
         const returnedResult = [];
         if (result.length > 0) {

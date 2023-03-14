@@ -85,13 +85,14 @@ function initEvents() {
 function renderDashboard(thispage){
     $('.page__content').remove();
     thispage.insertAfter('.page__header');
-    $("#bong1").click(function() {
-        changeLampStatus($(this));
-    });
+    // $("#640ee113bf49af0a529390ad").click(function() {
+    //     console.log(1111);
+    //     changeLampStatus($(this));
+    // });
 
-    $("#bong2").click(function() {
-        changeLampStatus($(this));
-    });
+    // $("#640ee119bf49af0a529390b1").click(function() {
+    //     changeLampStatus($(this));
+    // });
 }
 
 function renderTemperature(thispage) {
@@ -139,18 +140,14 @@ function renderLamp(thispage){
     thispage.insertAfter('.page__header');
 }
 
-function changeLampStatus(lamp){
+function changeLampStatus(lamp_id){
+    console.log(lamp_id);
+    lamp = $(`#${lamp_id}`);
     var obj = {};
     if (lamp.hasClass("button__icon--lamp--on")){
-        // lamp.removeClass("button__icon--lamp--on");
-        // lamp.addClass("button__icon--lamp--off");
-        // lamp.text('Tắt');
-        obj = {name: lamp.attr('name'), status: 0};
+        obj = {name: "status", value: "OFF", deviceId: lamp_id};
     } else {
-        // lamp.removeClass("button__icon--lamp--off");
-        // lamp.addClass("button__icon--lamp--on");
-        // lamp.text('Hoạt động');
-        obj = {name: lamp.attr('name'), status: 1};
+        obj = {name: "status", value: "ON", deviceId: lamp_id};
     }
     info = JSON.stringify(obj);
     publishMessage(info);

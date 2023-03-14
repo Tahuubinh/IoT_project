@@ -31,47 +31,29 @@ function onConnectionLost(response) {
 function onMessageArrived(message) {
   let info = JSON.parse(message.payloadString);
   console.log(info);
-  if (info.name == "bong1"){
-    setLampStatus($('#bong1'), info.status);
-  } else if (info.name == "bong2"){
-    setLampStatus($('#bong2'), info.status);
+  const infoId = info.deviceId;
+  if (info.value == "status") {
+    setLampStatus($(`#${infoId}`), info.value);
   } else if (info.name == "temperature"){
-    $.ajax({
-        url: "",
-        method: "GET",
-        success: function(res) {
-          if (res["status"]){
-            $('#temperature').text('Nhiệt độ: ' + res["status"] + String.fromCharCode(8451));
-          } else {
-            $('#temperature').text('Nhiệt độ: Không thu được kết quả ' + String.fromCharCode(8451));
-          }
-        },
-        error: function(res) {
-          alert("Error in get temperature");
-        }
-        
-    });
+    value = info.value;
+    if (value != undefined){
+      $(`#${infoId}`).text('Nhiệt độ: ' + value + String.fromCharCode(8451));
+    } else {
+      $('#temperature').text('Nhiệt độ: Không thu được kết quả ');
+    }
+
   } else if (info.name == "humidity"){
-    $.ajax({
-      url: "",
-      method: "GET",
-      success: function(res) {
-        if (res["status"]){
-          $('#humidity').text('Độ ẩm: ' + res["status"] + String.fromCharCode(0x00B3));
-        } else {
-          $('#humidity').text('Độ ẩm: Không thu được kết quả g/m' + String.fromCharCode(0x00B3));
-        }
-      },
-      error: function(res) {
-        alert("Error in get humidity");
-      }
-      
-  });
+    value = info.value;
+    if (value != undefined){
+      $(`#${infoId}`).text('Độ ẩm: ' + value + "%");
+    } else {
+      $(`#${infoId}`).text('Độ ẩm: Không thu được kết quả g/m');
+    }
   }
 }
 
-function setLampStatus(lamp, status){
-  if (status == "0"){
+function setLampStatus(lamp, value){
+  if (value == "OFF"){
     lamp.removeClass("button__icon--lamp--on");
     lamp.addClass("button__icon--lamp--off");
     lamp.text('Tắt');

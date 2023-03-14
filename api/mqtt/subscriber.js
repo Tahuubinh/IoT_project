@@ -26,9 +26,13 @@ const addOneData = async (data) => {
         }
     
         const result = await DeviceData.create(data);
-        if (name == "status" && (data.value === "ON" || data.value === "OFF")) {
+        if (name == "status" && (data.value == "ON" || data.value == "OFF")) {
             await Device.findByIdAndUpdate(data.deviceId, {
                 status: data.value
+            });
+        } else {
+            await Device.findByIdAndUpdate(data.deviceId, {
+                value: data.value
             });
         }
         return result;

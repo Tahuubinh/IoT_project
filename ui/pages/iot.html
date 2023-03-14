@@ -50,9 +50,9 @@
         <div class="content">
             <div class="page__header">
                 <div class="page__toolbar--left">
-                    <select name="" id="">
-                        <option value="1">Phòng khách</option>
-                        <option value="2">Ban công</option>
+                    <select name="" id="roomListing" onchange="getDeviceByRoom()">
+                        <!-- <option value="1">Phòng khách</option>
+                        <option value="2">Ban công</option> -->
                     </select>
                     <!-- <input id="searchInput" type="text" class="input input__icon input__icon--search" title="Tìm kiếm theo mã hoặc tên"> -->
                     <input id="searchInput" type="text" class="input" title="Tối đa 30 giờ tới">
@@ -62,18 +62,15 @@
             </div>
 
             <div class="page__content" id="content_dashboard">
-                <br> 
-                <!-- <div class="chartContainer"></div> -->
+                <!-- <br> 
                 <div style = "display: flex; position: relative;">
                     <div class="page__content--title">Bóng đèn 1:</div>
-                    <!-- <button id="bong1" class="button button__icon" style="position: absolute;left: 100px; transform: translate(0%, -25%);">Refresh</button> -->
                     <button id="bong1" class="button__icon button__icon--lamp button__icon--lamp--on" name="bong1">Hoạt động</button>
                 </div>
                 <br> 
                 <br>
                 <div style = "display: flex; position: relative;">
                     <div class="page__content--title">Bóng đèn 2:</div>
-                    <!-- <button id="bong1" class="button button__icon" style="position: absolute;left: 100px; transform: translate(0%, -25%);">Refresh</button> -->
                     <button id="bong2" class="button__icon button__icon--lamp button__icon--lamp--off" name="bong2">Tắt</button>
                 </div>
                 <br> 
@@ -82,8 +79,7 @@
                 <br> 
                 <br>
                 <div id="humidity" class="page__content--title" style = "color: blue;">Độ ẩm:</div>
-                
-                <!-- <div class="chartContainer" style="height: 300px; width: 100%;">4</div> -->
+                 -->
             </div>
 
             <div class="page__content" id="content_temperature">
@@ -129,6 +125,86 @@
     <script src="../js/pages/pub.js"></script>
     <script src="../js/pages/sub.js"></script>
     <script src="../js/pages/iot.js"></script>
+    <script> 
+        var token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDBlZDNlMDgyN2M3ZmQ4MmFhMzBkOTciLCJuYW1lIjoiaGF0dWFuazk3bGhwIiwiaWF0IjoxNjc4Njk2Njc1LCJleHAiOjE2ODEyODg2NzV9.udNDOdRb4ihHYtxfNiBTEk-fXBPQPgEx3rL2M5SszYY"
+        var baseUrl = "http://localhost:3000";
+        $.ajax({
+            url: baseUrl + "/api/room",
+            type: "get",
+            dataType: "json",   
+            contentType: "application/json; charset=UTF-8",
+            headers: {
+                'Authorization': token
+            },
+            success: function(data) {
+                for (let i = 0; i < data.length; i++) {
+                    $('#roomListing').append($('<option>', {
+                        value: data[i]._id,
+                        text: data[i].name
+                    }))
+                };
+                getDeviceByRoom();
+            }
+        });
+        
+        function getDeviceByRoomId(roomId) {
+            $.ajax({
+                url: baseUrl + `/api/device/room/${roomId}`,
+                type: "get",
+                dataType: "json",   
+                contentType: "application/json; charset=UTF-8",
+                headers: {
+                    'Authorization': token
+                },
+                success: function(data) {
+                    const leds = data.leds;
+                    const sensors = data.sensors;
+                    let dataDevice = "";
+                    dataDevice += `<br><br>`;
+                    // $("#content_dashboard").empty();
+                    for (let i = 0; i < leds.length; i++) {
+                        const led = leds[i];
+                        let str = `<div style = "display: flex; position: relative;">`;
+                        str += `<div class="page__content--title">` + led.deviceName + `: </div>`;
+                        if (led.status == "ON") {
+                            str += `<button id='${led._id}' class="button__icon button__icon--lamp button__icon--lamp--on" name='${led._id}' onclick="changeLampStatus('${led._id}')"=>Hoạt động</button>`;
+                        } else {
+                            str += `<button id='${led._id}' class="button__icon button__icon--lamp button__icon--lamp--off" name='${led._id}' onclick="changeLampStatus('${led._id}')">Tắt</button>`;
+                        }
+                        str += `</div><br><br>`;
+                        dataDevice += str;
+                    }
+
+                    for (let i = 0; i < sensors.length; i++) {
+                        const sensor = sensors[i];
+                        if (sensor.deviceType.name == "humidity_sensors") {
+                            let str = `<br><div id='${sensor._id}' class="page__content--title" style = "color: blue;">${sensor.deviceName}: ${sensor.value}` + "%" + `</div><br>`;
+                            dataDevice += str;
+                        }
+                        if (sensor.deviceType.name == "temperature_sensors") {
+                            let str = `<br><div id='${sensor._id}' class="page__content--title" style = "color: red;">${sensor.deviceName}: ${sensor.value} ` + String.fromCharCode(8451) + `</div><br>`;
+                            dataDevice += str;
+                        }
+                    }
+
+                    $("#content_dashboard").append(dataDevice);
+
+                }
+            });
+        }
+
+        function getDeviceByRoom() {
+            const roomId = $("#roomListing :selected").val();
+            console.log(roomId);
+            getDeviceByRoomId(roomId);
+        }
+
+        function fun(x) {
+            console.log(x)
+        }
+
+
+    </script>
 
 </body>
 

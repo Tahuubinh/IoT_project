@@ -18,6 +18,10 @@ const DeviceSchema = mongoose.Schema({
     deviceName: {
         type: String,
         required: true
+    },
+    value: {
+        type: Number,
+        default: 0
     }
 }, {
     timestamps: true
